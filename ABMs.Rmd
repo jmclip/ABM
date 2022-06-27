@@ -112,7 +112,7 @@ Today, we're going to go over a classic model that is intuitive to understand, s
     * <span style="color:darkblue"> Need to be able to move somewhere if unsatisfied. </span>
 
 ## Schelling's Model: preview
-![*Where we're going*](schell1.png){width=95%}
+![*Where we're going*](images/schell1.png){width=95%}
 
 
 ## Schelling's Model: setting up an ABM in PyCharm & Best practices
@@ -165,13 +165,13 @@ There are many ways we could think about agent sensitivity / tolerance: The big 
 ## Schelling with two levels of tolerance
 Here, we'll dive back in and observe what happens when we have two levels of tolerance, one per group, than can potentially vary. Consider what you think will happen and make a prediction -- in particular, think about how the other parameter values (proportion of group size, density) may also factor in. 
 
-![*Our new model*](schell2.png){width=95%}
+![*Our new model*](images/schell2.png){width=95%}
 
 
 ## Output/Analysis: in and out of the model
 When you run the model, you can also include charts and other graphics to track relevant metrics. 
 
-![*Our new model*](schell2c.png){width=45%}
+![*Our new model*](images/schell2c.png){width=45%}
 
 ## Output/Analysis: in and out of the model
 When you run the model, you can also include charts and other graphics to track relevant metrics. But, you may want to be able to do things with this data beyond looking at it on a model-by-model-run basis. 
