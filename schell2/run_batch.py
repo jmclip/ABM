@@ -2,9 +2,6 @@ from model import SegModel
 from mesa.batchrunner import FixedBatchRunner
 
 
-
-
-
 fixed_parameters = {
     "height": 20,
     "width": 20,
@@ -21,10 +18,8 @@ parameters_list=[{"homophily1": 2},
 
 
 batch_run = FixedBatchRunner(SegModel, parameters_list,
-                        fixed_parameters, iterations=1,
-                             model_reporters={"Happy": "happy",
-                                              "Happy Group A": "happy0",
-                                              "Happy Group B": "happy1"}
+                        fixed_parameters, iterations=10,
+                             model_reporters={"Happy": lambda a: a.happy}
                              )
 
 
@@ -33,7 +28,7 @@ batch_run.run_all()
 
 # Data collection
 #extract data as a pandas Data Frame
-#batch_df = batch_run.get_model_vars_dataframe()
+batch_df = batch_run.get_model_vars_dataframe()
 
 # export the data to a csv file for graphing/analysis
-#batch_df.to_csv("data/seg_model_batch_run_data.csv")
+batch_df.to_csv("data/seg_model_batch_run_data.csv")
