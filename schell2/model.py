@@ -6,12 +6,13 @@ import random
 
 # set a seed so that others runs match mine
 # note: if running this model for analysis,
-# comment the seed segment out
-random.seed(10)
+# replace seed=None
+seed = 10
+random.seed(seed)
 
 # set up and initialize the agents
 class SegAgent(Agent):
-    def __init__(self, pos, model, agent_type): #agents and their characteristics
+    def __init__(self, pos, model, agent_type, seed=seed): #agents and their characteristics
         super().__init__(pos, model)
         self.pos = pos
         self.type = agent_type
@@ -59,7 +60,7 @@ class SegAgent(Agent):
 #set up the model and initalize the world
 class SegModel(Model):
     #adding agents to the world
-    def __init__(self, width, height, density, minority_pc, homophily0, homophily1):
+    def __init__(self, width, height, density, minority_pc, homophily0, homophily1, seed=seed):
         self.density = density
         self.minority_pc = minority_pc
         self.homophily0 = homophily0
