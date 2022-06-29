@@ -6,10 +6,10 @@ from mesa.visualization.UserParam import UserSettableParameter
 
 from model import SegModel
 
-
+# calula
 def get_happy_agents(model):
     #Display a text count of how many happy agents there are.
-   return f"Happy agents: {model.happy}"
+   return f"Happy: {model.happy}"
 
 
 def schelling_draw(agent):
@@ -38,8 +38,8 @@ model_params = {
     "width": 20,
     "density": UserSettableParameter('slider', "Agent density", 0.8, 0.1, 1.0, 0.1),
     "minority_pc": UserSettableParameter('slider', "Fraction minority", 0.2, 0.00, 1.0, 0.05),
-    "homophily0": UserSettableParameter('slider', "Homophily Group A: (Desired # of matching neighbors) ", 0.34, 0, 1, 1/8),
-    "homophily1": UserSettableParameter('slider', "Homophily Group B: (Desired # of matching neighbors) ", 0.34, 0, 1, 1/8),
+    "homophily0": UserSettableParameter('slider', "Homophily Group A: (Desired % of matching neighbors) ", 2, 0, 8, 1),
+    "homophily1": UserSettableParameter('slider', "Homophily Group B: (Desired % of matching neighbors) ", 3, 0, 8, 1),
 }
 
 # this is where we call the different elements we're going to be visualizing

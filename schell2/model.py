@@ -4,25 +4,31 @@ from mesa.space import SingleGrid
 from mesa.datacollection import DataCollector
 import random
 
-from mesa.batchrunner import BatchRunner
+# set a seed so that others runs match mine
+# note: if running this model for analysis,
+# comment the seed segment out
+random.seed(10)
 
+# set up and initialize the agents
 class SegAgent(Agent):
-    def __init__(self, pos, model, agent_type):
+    def __init__(self, pos, model, agent_type): #agents and their characteristics
         super().__init__(pos, model)
         self.pos = pos
         self.type = agent_type
 
+    # describe what happens in each step for the agents
+    # agents check surroundings and count neighbors of the same type
     def step(self):
-        #h = 0
         similar = 0
         for neighbor in self.model.grid.iter_neighbors(self.pos, True):
             if neighbor.type == self.type:
                 similar += 1
-                #print(similar)
+                #print(similar) #this is here for debugging
 
         # If unhappy, move:
+        # this permits different types to have different group thresholds
         if self.type == 0:
-            if similar < 8 * self.model.homophily0:
+            if similar < self.model.homophily0:
                 self.model.grid.move_to_empty(self)
                 #print(str(similar) + " happy " + str(happy))
             else:
@@ -31,7 +37,7 @@ class SegAgent(Agent):
                 #h = h + 1
                 #print( str(h)+ ",")
         else:
-            if similar < 8 * self.model.homophily1:
+            if similar < self.model.homophily1:
                 self.model.grid.move_to_empty(self)
                 #print(str(similar) + " happy " + str(happy))
             else:
@@ -40,6 +46,7 @@ class SegAgent(Agent):
                 #h = h + 1
                 #print( str(h)+ ",")
 
+    # set up the actions available to agents
     def move(self):
         possible_steps = self.model.grid.get_neighborhood(
             self.pos,
@@ -49,6 +56,7 @@ class SegAgent(Agent):
         new_position = self.random.choice(possible_steps)
         self.model.grid.move_agent(self, new_position)
 
+#set up the model and initalize the world
 class SegModel(Model):
     #adding agents to the world
     def __init__(self, width, height, density, minority_pc, homophily0, homophily1):
@@ -67,21 +75,15 @@ class SegModel(Model):
             model_reporters={"Happy": "happy",
                              "Happy Group A": "happy0",
                              "Happy Group B": "happy1"},  # Model-level count of happy agents  + subgroup counts
-
-            # For testing purposes, agent's individual x and y
-            #{"x": lambda a: a.pos[0], "y": lambda a: a.pos[1]},
         )
 
         # Set up agents
-        # We use a grid iterator that returns
-        # the coordinates of a cell as well as
-        # its contents. (coord_iter)
+
 
         self.num_agents=round(density * width * height)
         #print("Expecting agents: " + str(self.num_agents))
 
         for i in range(self.num_agents):
-            #print("this is round " + str(i))
             x = self.random.randrange(self.grid.width)
             y = self.random.randrange(self.grid.height)
 
@@ -97,16 +99,11 @@ class SegModel(Model):
 
 
 
-        self.running = True
+        self.running = True # need this for batch runner
         self.datacollector.collect(self)
 
-        # Some metrics we'll measure about our model
-
-       # self.datacollector = DataCollector(
-        #    model_reporters={"Happiness": compute_gini},
-       #     agent_reporters={"Happiness": "happy"},
-       # )
-
+    #define what happens in one step of the model
+    #model stopped when all agents are happy
     def step(self):
         """
         Run one step of the model. If All agents are happy, halt the model.
@@ -116,16 +113,15 @@ class SegModel(Model):
         self.happy1 = 0  # Reset counter of happy agents
         self.schedule.step()
 
-        # collect data
-        self.datacollector.collect(self)
-        #happy = model.datacollector.get_model_vars_dataframe()
 
         if self.happy == self.schedule.get_agent_count():
             self.running = False
 
         # Data collection
-        #schell_data = model.datacollector.get_model_vars_dataframe()
-        # save the model data (stored in the pandas gini object) to CSV
-       # schell_data.to_csv("model_data.csv")
-        # save the agent data (stored in the pandas agent_wealth object) to CSV
-        #agent_happy0_to_csv("agent_data.csv")
+        # extract data as a pandas Data Frame
+        self.datacollector.collect(self)
+        model_df = self.datacollector.get_model_vars_dataframe()
+
+        # export the data to a csv file for graphing/analysis
+        model_df.to_csv("data/seg_model_gui_run_data.csv")
+
