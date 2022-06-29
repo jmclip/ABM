@@ -2,16 +2,16 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.space import SingleGrid
 from mesa.datacollection import DataCollector
-import random
 
-from mesa.batchrunner import BatchRunner
-
+# set up and initialize the agents
 class SegAgent(Agent):
     def __init__(self, pos, model, agent_type):
         super().__init__(pos, model)
         self.pos = pos
         self.type = agent_type
 
+    # describe what happens in each step for the agents
+    # agents check surroundings and count neighbors of the same type
     def step(self):
         happy = 0
         h = 0
@@ -30,6 +30,8 @@ class SegAgent(Agent):
             h = h + 1
             #print( str(h)+ ",")
 
+
+    # set up the actions available to agents
     def move(self):
         possible_steps = self.model.grid.get_neighborhood(
             self.pos,
@@ -39,6 +41,7 @@ class SegAgent(Agent):
         new_position = self.random.choice(possible_steps)
         self.model.grid.move_agent(self, new_position)
 
+#set up the model and initalize the world
 class SegModel(Model):
     #adding agents to the world
     def __init__(self, width, height, density, minority_pc, homophily):
@@ -81,16 +84,12 @@ class SegModel(Model):
 
 
 
-        self.running = True
+        self.running = True #needed for batchrunner
         self.datacollector.collect(self)
 
-        # Some metrics we'll measure about our model
 
-       # self.datacollector = DataCollector(
-        #    model_reporters={"Happiness": compute_gini},
-       #     agent_reporters={"Happiness": "happy"},
-       # )
-
+    # define what happens in one step of the model
+    # model stopped when all agents are happy
     def step(self):
         """
         Run one step of the model. If All agents are happy, halt the model.
@@ -98,7 +97,7 @@ class SegModel(Model):
         self.happy = 0  # Reset counter of happy agents
         self.schedule.step()
 
-        # collect data
+
         self.datacollector.collect(self)
 
         if self.happy == self.schedule.get_agent_count():

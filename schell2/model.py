@@ -12,7 +12,7 @@ random.seed(seed)
 
 # set up and initialize the agents
 class SegAgent(Agent):
-    def __init__(self, pos, model, agent_type, seed=seed): #agents and their characteristics
+    def __init__(self, pos, model, agent_type): #agents and their characteristics
         super().__init__(pos, model)
         self.pos = pos
         self.type = agent_type
@@ -79,8 +79,6 @@ class SegModel(Model):
         )
 
         # Set up agents
-
-
         self.num_agents=round(density * width * height)
         #print("Expecting agents: " + str(self.num_agents))
 

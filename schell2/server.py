@@ -6,7 +6,7 @@ from mesa.visualization.UserParam import UserSettableParameter
 
 from model import SegModel
 
-# calula
+# calculate how many happy agents
 def get_happy_agents(model):
     #Display a text count of how many happy agents there are.
    return f"Happy: {model.happy}"

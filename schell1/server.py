@@ -6,7 +6,7 @@ from mesa.visualization.UserParam import UserSettableParameter
 
 from model import SegModel
 
-
+# calculate how many happy agents
 def get_happy_agents(model):
     #Display a text count of how many happy agents there are.
    return f"Happy agents: {model.happy}"
@@ -39,6 +39,10 @@ model_params = {
     "homophily": UserSettableParameter('slider', "Homophily: (Desired % of matching neighbors) ", 0.375, 0, 1, 1/8),
 }
 
+
+# this is where we call the different elements we're going to be visualizing
+# it includes the model, the graph/grid/world, and our various charts
+# it also features a name for the model and our relevant parameter values
 server = ModularServer(
     SegModel,
     [canvas_element, happy_chart],
