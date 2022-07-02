@@ -21,9 +21,9 @@ batch_run = FixedBatchRunner(SegModel, parameters_list,
                                      100 * m.happy0 / m.num_agents0, 1),
                                  "Pct Happy Group B": lambda m: round(
                                      100 * m.happy1 / m.num_agents1, 1),
-                                 "Avg pct similar neighbors": lambda m: round(100 * m.similar_g / m.neighbors_g, 1),
-                                 "Avg pct similar neighbors (A)": lambda m: round(100 * m.similar_g0/ m.neighbors_g0, 1),
-                                 "Avg pct similar neighbors (B)": lambda m: round(100 * m.similar_g1/ m.neighbors_g1, 1)},
+                                 "Avg pct similar neighbors": lambda m: m.pct_neighbors,
+                                 "Avg pct similar neighbors (A)": lambda m: m.pct_neighbors0,
+                                 "Avg pct similar neighbors (B)": lambda m: m.pct_neighbors1},
                              max_steps=10)
 
 # run the batches of your model with the specified variations

@@ -18,23 +18,12 @@ class HappyElement(TextElement):
 class SimilarElement(TextElement):
 
     def render(self, model):
-        similar_calc = model.similar_g / model.neighbors_g * 100
-        return "Avg. % similar neighbors: " + str(round(similar_calc, 1)) + "%"
+        return "Avg. % similar neighbors: " + str(model.pct_neighbors) + "%"
 
-
-class SimilarElement0(TextElement):
+class SimilarElement_g(TextElement):
 
     def render(self, model):
-        similar_calc0 = model.similar_g0 / model.neighbors_g0 * 100
-        return "Avg. % similar neighbors (A): " + str(round(similar_calc0, 1)) + "%"
-
-
-class SimilarElement1(TextElement):
-
-    def render(self, model):
-        similar_calc1 = model.similar_g1 / model.neighbors_g1 * 100
-        return "Avg. % similar neighbors (B): " + str(round(similar_calc1, 1)) + "%"
-
+        return "Groups avg. % similar neighbors: (A) " + str(model.pct_neighbors0) + "%" + " (B) " + str(model.pct_neighbors1) + "%"
 
 def schelling_draw(agent):
     if agent is None:
@@ -42,7 +31,7 @@ def schelling_draw(agent):
     portrayal = {"Shape": "circle", "r": 0.5, "Filled": "true", "Layer": 0}
 
     if agent.type == 0:
-        portrayal["Color"] = "maroon"
+        portrayal["Color"] = "Maroon"
 
     else:
         portrayal["Color"] = "mediumpurple"
@@ -52,8 +41,7 @@ def schelling_draw(agent):
 
 happy_element = HappyElement()
 similar_element = SimilarElement()
-similar_element0 = SimilarElement0()
-similar_element1 = SimilarElement1()
+similar_element_g = SimilarElement_g()
 canvas_element = CanvasGrid(schelling_draw, 20, 20, 500, 500)
 happy_chart = ChartModule([{"Label": "Pct Happy", "Color": "Black"}])
 happy_chart0 = ChartModule([{"Label": "Pct Happy Group A", "Color": "Maroon"}])
@@ -64,11 +52,11 @@ model_params = {
     "width": 20,
     "width": 20,
     "num_agents": UserSettableParameter('slider', "Number Agents", 350, 10, 400, 10),
-    "minority_pc": UserSettableParameter('slider', "% group B", 0.3, 0.00, 1.0, 0.05),
-    "homophily0": UserSettableParameter('slider', "Homophily Group A: (Desired % of matching neighbors) ", 0.25, 0, 1,
-                                        0.125),
-    "homophily1": UserSettableParameter('slider', "Homophily Group B: (Desired % of matching neighbors) ", 0.375, 0, 1,
-                                        0.125),
+    "minority_pc": UserSettableParameter('slider', "% group B", 0.35, 0.00, 1.0, 0.05),
+    "homophily0": UserSettableParameter('slider', "Homophily Group A: (Desired % of matching neighbors) ",
+                                        0.375, 0, 1, 0.125),
+    "homophily1": UserSettableParameter('slider', "Homophily Group B: (Desired % of matching neighbors) ",
+                                        0.25, 0, 1, 0.125),
 }
 
 # this is where we call the different elements we're going to be visualizing
@@ -77,7 +65,7 @@ model_params = {
 server = ModularServer(
     SegModel,
     [canvas_element, happy_element,
-     similar_element, similar_element0, similar_element1,
+     similar_element, similar_element_g,
      happy_chart,
      happy_chart0, happy_chart1],
     "Schelling's Segregation Model",

@@ -4,7 +4,7 @@
     <title>Getting Started with Agent-Based Models</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jean Clipperton" />
-    <meta name="date" content="2022-07-01" />
+    <meta name="date" content="2022-07-02" />
     <script src="ABMs_slides_files/header-attrs-2.14/header-attrs.js"></script>
     <link href="ABMs_slides_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
     <script src="ABMs_slides_files/panelset-0.2.6/panelset.js"></script>
@@ -46,6 +46,15 @@ class: inverse, middle
 
 .large_font_page{
   font-size: 50px;
+}
+
+.maroon {
+color: #80000;
+}
+
+mark-inverse {
+  background: white;
+  color: .maroon;
 }
 &lt;/style&gt;
 
@@ -161,13 +170,14 @@ Today, we're going to go over a classic model that is intuitive to understand, s
 - Schelling's model is *one piece* in exploring and understanding patterns we see in housing markets and neighborhood patterns. 
 
 ---
+class:inverse, bold-last-item
 # Example: ABM setup  
- - **Actors** (what are the units / agents /actors) 
-     + &lt;span style="color:darkblue"&gt;Need two types of actors (why two?). &lt;/span&gt; 
- - **Parameters** (AKA *variables*) (what are the possible values/items that can be incorporated)
+ - &lt;b&gt;Actors&lt;/b&gt; (what are the units / agents /actors) 
+     + {{Need two types of actors (why two?).}} 
+ - &lt;b&gt;Parameters&lt;/b&gt; (AKA *variables*) (what are the possible values/items that can be incorporated)
       + &lt;span style="color:darkblue"&gt; Agent type. &lt;/span&gt;  
       + &lt;span style="color:darkblue"&gt; Agent tolerance threshold. &lt;/span&gt; 
- - **Framework**  structure for interaction (in what way are actors aggregating information from their environment)
+ - &lt;b&gt;Framework&lt;/b&gt;  structure for interaction (in what way are actors aggregating information from their environment)
     * &lt;span style="color:darkblue"&gt; Start with random placement. &lt;/span&gt;
     * &lt;span style="color:darkblue"&gt; Neighborhood / area to scan. &lt;/span&gt;
     * &lt;span style="color:darkblue"&gt; Evaluate their satisfaction.&lt;/span&gt;
@@ -288,10 +298,7 @@ class: small_font_page
 For example, here are the graphics we're generally tied to in the GUI:
 
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/schell2_seed10.png" alt="Run with seed set to 10" width="30%" /&gt;
-&lt;p class="caption"&gt;Run with seed set to 10&lt;/p&gt;
-&lt;/div&gt;
+&lt;img src="images/schell2_seed10.png" width="30%" style="display: block; margin: auto;" /&gt;
 ]
 
 .panel[.panel-name[Exported &amp; Plotted:Overall]
@@ -314,7 +321,7 @@ These models come from a process with stochastic elements. To explore what happe
 ---
 # Batch Runs / Parameter Sweeps
 
-&lt;img src="ABMs_slides_files/figure-html/unnamed-chunk-8-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="ABMs_slides_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Applications: Housing  
@@ -338,18 +345,28 @@ Future complications and explorations of Schelling's model might **explore how t
 ]
 
 ---
-# Applications:  **How might neighborhoods restructure?**
+# How might neighborhoods change?
 
 .pull-left[
 &lt;img src="images/mn_zoning_crop.png" width="85%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
-&lt;img src="images/schell2.png" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;br&gt;
+&lt;img src="images/mn_ex.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
+---
+# How might neighborhoods change?
 
+.pull-left[
+&lt;img src="images/mn_zoning_crop.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
 
+.pull-right[
+&lt;br&gt;
+&lt;img src="images/mn_ex2.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
 
 
 ---
@@ -382,11 +399,6 @@ class: inverse, middle, center
 ##Questions?
  Thank you!
 
----
-# Setting a seed
-A seed is effectively a starting point for a random number generator (since they're not truly random!).
-
-We don't go into it much here, but setting a seed allows for reproducible results. Here, I set an arbitrary seed so that if you run the model, you could replicate my results. If we were using this model for analyses, we'd record the seeds from our runs but wouldn't necessarily proscribe one. 
 
 ---
 # Classic / canonical models:
@@ -394,24 +406,19 @@ We don't go into it much here, but setting a seed allows for reproducible result
 
 ---
 # Applications &amp; Connections to Research
-###What could we learn from such a simple model? 
+### What could we learn from such a simple model? 
 
 One application can be thinking about **gentrification**, for example in how we see neighborhoods changing over time. **Schelling's model helps us understand that having a low threshold for similar neighbors can produce staggering levels of segregation,** without even accounting for institutional structures that can entrench housing / employment practices or otherwise amplify and perpetuate differences across groups. 
 
 ---
 # Applications &amp; Connections to Research
-###What could we learn from such a simple model? 
+### What could we learn from such a simple model? 
 
 What we found in our initial simulations is that about 1/3 tends to be a cutoff or threshold for seeing segregation in neighborhoods. **In established neighborhoods, would this threshold also drive change?**
 
 --
 
 Hwang and Sampson (2014) found that there is **indeed a 'threshold cutoff' for gentrification that appears to be around 40%.** Comparing that to the simple Schelling segregation model, 40% is just over 3/8 neighbors being from a different group. [Hwang and Sampson (2014).](https://journals.sagepub.com/doi/10.1177/0003122414535774)]
-
-
-
-
-
 
 
 
