@@ -1,14 +1,16 @@
 from model import SegModel
 
-#Set your parameter values for one run
+# Set your parameter values for one run
 # Reminder that the model takes on these parameter values:
 # width, height, density, minority_pc, homophily0, homophily1
 
-model = SegModel(20, 30, 0.8, 0.2, 2, 3)
+model = SegModel(20, 30, 0.8, 0.2, 0.25, 0.375)
 for t in range(300):
     model.step()
 
-#extract data as a pandas Data Frame
+
+
+# extract data as a pandas Data Frame
 model_df = model.datacollector.get_model_vars_dataframe()
 
 # export the data to a csv file for graphing/analysis
