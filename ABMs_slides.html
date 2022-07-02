@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Getting Started with Agent-Based Models</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jean Clipperton" />
+    <meta name="date" content="2022-07-01" />
+    <script src="ABMs_slides_files/header-attrs-2.14/header-attrs.js"></script>
+    <link href="ABMs_slides_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="ABMs_slides_files/panelset-0.2.6/panelset.js"></script>
+    <script src="ABMs_slides_files/freezeframe-5.0.2/freezeframe.min.js"></script>
+    <script src="ABMs_slides_files/xaringanExtra-freezeframe-0.0.1/freezeframe-init.js"></script>
+    <script id="xaringanExtra-freezeframe-options" type="application/json">{"selector":"img[src$=\"gif\"]","trigger":"click","overlay":false,"responsive":true,"warnings":true}</script>
+    <link href="ABMs_slides_files/xaringanExtra-banner-0.0.1/banner.css" rel="stylesheet" />
+    <script src="ABMs_slides_files/xaringanExtra-banner-0.0.1/banner.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide, left, bottom
+background-image: url(images/model_example.gif)
+background-size: cover
+
+.large[##**Getting Started with &lt;br&gt; Agent-Based Models** ]
+**Jean Clipperton** 
+
+
+
+---
+class: inverse, middle
+# Goals for today:
+1. Learn setup for Agent-Based Modeling.
+2. Explore a classic ABM model. 
+
+--
+3. Have fun. (!)
+
+
+
+
+&lt;style type="text/css"&gt;
+.small_font_page {
+  font-size: 20px;
+}
+
+.large_font_page{
+  font-size: 50px;
+}
+&lt;/style&gt;
+
+<script>document.addEventListener('DOMContentLoaded',function(){new xeBanner(JSON.parse('{"exclude":["inverse"],"position":"top"}'))})</script>
+<script>document.addEventListener('DOMContentLoaded',function(){new xeBanner(JSON.parse('{"right":"Slides & Code: https://github.com/jmclip/ABM","exclude":["inverse"],"position":"bottom"}'))})</script>
+
+
+
+
+---
+# About me
+PhD in Political Science from University Michigan with certificate in Complex Systems and CRLT's Graduate Teaching Certificate. Research focuses upon institutions (EU directives, institutional design and change) and teaching and learning (do attendance policies matter? how to best structure student learning?).
+
+- Co-edited free textbook on Empirical Research Methods for undergraduates
+- Mentor and developed advanced quantitative methods coursework
+- Teach quantitatively-focused courses in Political Science, Sociology, and Mathematical Methods in the Social Sciences
+
+---
+# Intro &amp; agenda  
+Today we'll cover the foundations of getting started in modeling, giving an overview of models, their uses and applications, and how they might feature into a course. 
+
+--
+ - Talk context
+ - Intro to Agent-Based Models
+ - Model components
+ - Application (Schelling)
+ - Adapting models / varying parameters
+ - Course framing
+ - Conclusions
+
+
+---
+# Some assumptions:
+
+- You're all smart people
+
+--
+
+- You may have not seen an agent-based model (or have heard of it)
+
+--
+
+- This talk will be conceptually connected to how we'd build ideas in a course, but in the interest of time, **I won't go into as much detail as I typically would in a course.** We're also going to sacrifice some interactive coding-ness. 
+
+---
+# What is an Agent-Based Model (ABM)?
+ABMs allow you to focus on a) the evolution of behavior / system and b) explicitly engage with heterogeneous actors. 
+
+--
+
+In contrast to other types of models, **ABMs permit heterogeneous agents who can have different experiences** and allow you to explore system-level effects, the path to equilibrium, and **emergent phenomena.** 
+ 
+---
+
+# ABMs vs. other models:
+
+- **Linear Regression**: focus upon large-scale relationships instead of individual-level factors.
+
+- **Systems Dynamics**: focus on the system from a high level; typically need an understanding of the equations governing the system. 
+
+- **Game Theory**: can look at final equilibrium of the system, without information about what occurs on the way there nor how long it will take. 
+
+- **ABM**: 'Bottom-up' approach using simple assumptions, analyzes how the system behaves and emergent phenomena that result from the model.  
+
+
+---
+# ABM setup and components: 
+### Who does what, how?
+- **Actors** these can be people, animals, businesses, etc. The *units* you care about
+- **Parameters** (AKA *variables*) these are the things you're going to vary
+- **Framework**  structure for interaction 
+  -Structure ecosystem / environment for actor
+  - Define movement / behavior (where are they placed, how they interact, move, etc.) 
+
+---
+
+# ABM setup and components: 
+### Who does what, how?
+- **Actors** (what are the units / agents /actors)
+  - Initialize with identical or varied attributes
+- **Parameters** (AKA *variables*) 
+  - Consider range and other variation / combination potentials
+- **Framework**  structure for interaction 
+  -Structure ecosystem / environment for actor
+  - Define movement / behavior (where are they placed, how they interact, move, etc.) 
+    
+    
+---
+# Applications
+ABMs allow you to evaluate system dynamics from relatively simple initial conditions and have applications in many fields.
+
+- **Political Science** emergence of markets, effects of institutional change
+- **Sociology** neighborhood segregation, evolution of cultural groups
+- **Economics** tragedy of the commons, market bubbles
+- **Ecology** flocking, predator/prey models, ecosystems
+- **Epidemiology** pandemic modeling, health disparities, public health policy analysis
+
+
+---
+# Example: Schelling's segregation model
+Today, we're going to go over a classic model that is intuitive to understand, somewhat surprising in its findings, and easily customizable: Schelling's segregation model. 
+
+.footnote[Schelling, T. C. (1978). *Micromotives and macrobehavior.* New York: Norton.]
+
+
+---
+# Example: Schelling's segregation model
+
+- The model seeks to **explore why we might see stark segregation**, even if focusing *solely* on actor behavior / motivation between two groups, and assuming somewhat benign intentions (no explicit dislike / hatred).
+
+--
+
+- Schelling's model is *one piece* in exploring and understanding patterns we see in housing markets and neighborhood patterns. 
+
+---
+# Example: ABM setup  
+ - **Actors** (what are the units / agents /actors) 
+     + &lt;span style="color:darkblue"&gt;Need two types of actors (why two?). &lt;/span&gt; 
+ - **Parameters** (AKA *variables*) (what are the possible values/items that can be incorporated)
+      + &lt;span style="color:darkblue"&gt; Agent type. &lt;/span&gt;  
+      + &lt;span style="color:darkblue"&gt; Agent tolerance threshold. &lt;/span&gt; 
+ - **Framework**  structure for interaction (in what way are actors aggregating information from their environment)
+    * &lt;span style="color:darkblue"&gt; Start with random placement. &lt;/span&gt;
+    * &lt;span style="color:darkblue"&gt; Neighborhood / area to scan. &lt;/span&gt;
+    * &lt;span style="color:darkblue"&gt; Evaluate their satisfaction.&lt;/span&gt;
+    * &lt;span style="color:darkblue"&gt; Move somewhere if unsatisfied. &lt;/span&gt;
+
+---
+# Schelling's model: preview
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/model_example.gif" alt="Where we're going" width="60%" /&gt;
+&lt;p class="caption"&gt;Where we're going&lt;/p&gt;
+&lt;/div&gt;
+---
+# Schelling's model: file structure
+
+Alternatives: Jupityr notebook, Google Colab, or IDE of choice. 
+
+- **Framework** for running the ABM: [Mesa](https://pypi.org/project/Mesa/) 
+    - [Documentation at this link](https://mesa.readthedocs.io/_/downloads/en/latest/pdf/)
+- **File structure**: start with three files.
+  - *Model*: actualize agents and their environment.
+  - *Server*: visualize the model.
+  - *Run*: run the model(not always necessary for simple models but good to build the habit now!).
+  - *README*: file with a model overview.
+
+---
+class: inverse, large_font_page, middle  
+
+Our organizing principle: 
+--
+
+.right[ 
+## KEEP IT SIMPLE 
+]
+
+---
+# Designing the model: model file structure
+In the interest of time, we'll focus on the model file. We'll need to think about our agents, what they can do, and how. 
+
+--
+
+You'll have two main classes: your **agent class** (can divide up by type) and the **model class**. 
+
+---
+# Designing the model: model file structure
+
+- Import Mesa and anything else you'll need.
+- **Agent class**: 
+  - Initialize properties within the agents (e.g. happiness).
+  - Define what happens for an agent within a time step.
+- **Model class**:  
+  - Define model-level parameter values (e.g. desired similarity level).
+  - Define what happens at the model level in a time step (e.g. run the model until all agents are happy).
+  - Collect data.
+
+---
+class: large_font_page, inverse, middle 
+&lt;br&gt;
+ ##All models are wrong, but some are useful.
+ .center[*George Box*]
+
+---
+# Complicating the model
+We might think that while simple, we've sacrificed *too much* and we want to recapture some of the complexity of the situation. Let's consider ways we might complicate this model in a meaningful way: 
+--
+
++ **Types** of agents (could consider multiple types).
++ **Sensitivity** of agents (some are more/less tolerant).
++ **Initialization** of the model (could think about 'geographic' placement of actors/agents).
++ Additional **attributes** of actors (e.g. wealth).
+
+---
+# Complicating the model: 
+**Agent sensitivity / tolerance** 
+There are many ways we could think about agent sensitivity / tolerance: The big focus might be across or within group tolerance. 
+
+**Across group tolerance** Here, our concern is whether the two groups have similar levels of tolerance. 
+
+**Within group tolerance** Here, our concern is whether the agents within each group have the same tolerance threshold. 
+--
+
+&lt;center&gt;&lt;font size="50"&gt;Our motto is always &lt;br&gt; KEEP IT SIMPLE&lt;/center&gt;&lt;/font&gt;
+
+---
+# Schelling with two levels of tolerance
+
+&lt;img src="images/schell2.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;br&gt;
+--
+**Predict what you think will happen** - *in particular, consider how the other parameter values (proportion of group size, density) may also contribute.* 
+
+
+---
+# Output/analysis: model metrics
+Here is the (not that pretty) output we get.We could clean this up, but it's still a graphic and difficult to include in other work.  
+
+&lt;img src="images/schell2c.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+# Exploring your output beyond the GUI
+You might want nicer graphics from one or multiple runs. In these cases, you'll want to export your data. 
+--
+There are multiple ways you might do this -- I added separate files to allow you to 
+
+1. **Export the data** from the specific run in the gui, 
+2. bypass the gui and just do a single run, 
+3. Do a **batch run** where you run the model multiple times and to get a sense of trends, 
+or 
+4. Do a **parameter sweep** where you explore how varying the parameters may lead to different outcomes
+5. Do a **batch run of parameter sweeps**
+
+---
+class: small_font_page
+# Exporting your data and running your own analysis
+.panelset[
+
+.panel[.panel-name[GUI]
+For example, here are the graphics we're generally tied to in the GUI:
+
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/schell2_seed10.png" alt="Run with seed set to 10" width="30%" /&gt;
+&lt;p class="caption"&gt;Run with seed set to 10&lt;/p&gt;
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Exported &amp; Plotted:Overall]
+&lt;img src="ABMs_slides_files/figure-html/unnamed-chunk-6-1.png" width="56%" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[Exported &amp; Plotted:Groups]
+&lt;img src="ABMs_slides_files/figure-html/unnamed-chunk-7-1.png" width="56%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+# Batch Runs / Parameter Sweeps
+These models come from a process with stochastic elements. To explore what happens overall, you might want to either **run your model multiple times and/or do multiple parameter sweeps** where you explore the relationships between changing a variable and the outcome. 
+
+--
+
+**Parameter sweeps** usually involve varying one or two parameters across key values. 
+
+---
+# Batch Runs / Parameter Sweeps
+
+&lt;img src="ABMs_slides_files/figure-html/unnamed-chunk-8-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+# Applications: Housing  
+
+Schelling's model can help us understand what we observe around us, and help us further **explore implications for neighborhood change**. 
+
+Future complications and explorations of Schelling's model might **explore how to incorporate the delay and cost into moving** to better anticipate how, for example, Minneapolis' planned 2040 ban on single-family zoning. 
+
+---
+# Applications: Minneapolis zoning and racial covenants
+.pull-left[
+&lt;img src="images/mn_zoning_crop.png" width="85%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;tab&gt;.footnote[[&amp;nbsp; &amp;emsp; Source: NPR on MN's housing ban](https://www.npr.org/2020/06/18/877460056/minneapolis-has-a-bold-plan-to-tackle-racial-inequity-now-it-has-to-follow-throu)]
+]
+--
+.pull-right[
+- Initialize a model to **represent MN** (use Census data).
+- Allow for **high/low tolerance within/across groups**.
+- Multi-grid (Mesa module) or other option to permit **multiple agents on one grid space**.
+- Add agent wealth and cost to moving.
+]
+
+---
+# Applications:  **How might neighborhoods restructure?**
+
+.pull-left[
+&lt;img src="images/mn_zoning_crop.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/schell2.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+
+
+
+
+---
+# Recap: what are ABMs?
+
+- ABMs offer **flexibility to explore individually-driven analyses and simulations**
+- ABMs are structured around:
+  - Agents.
+  - Models/the world you setup.
+- Data can be collected on a run-by-run basis.
+- You can (and should) do multiple runs of your model across multiple parameter values. 
+
+
+---
+# Course framing
+This was an excerpt and condensation of a course on ABM. Below I provide a loose course outline. 
+
+###Course topics
+- Intro / background
+- Applications / canonical models
+- Diagnostics
+- Output / model analysis
+- Robustness checks
+- Getting it 'right' --  the art of modeling
+
+
+---
+class: inverse, middle, center
+
+##Questions?
+ Thank you!
+
+---
+# Setting a seed
+A seed is effectively a starting point for a random number generator (since they're not truly random!).
+
+We don't go into it much here, but setting a seed allows for reproducible results. Here, I set an arbitrary seed so that if you run the model, you could replicate my results. If we were using this model for analyses, we'd record the seeds from our runs but wouldn't necessarily proscribe one. 
+
+---
+# Classic / canonical models:
+
+
+---
+# Applications &amp; Connections to Research
+###What could we learn from such a simple model? 
+
+One application can be thinking about **gentrification**, for example in how we see neighborhoods changing over time. **Schelling's model helps us understand that having a low threshold for similar neighbors can produce staggering levels of segregation,** without even accounting for institutional structures that can entrench housing / employment practices or otherwise amplify and perpetuate differences across groups. 
+
+---
+# Applications &amp; Connections to Research
+###What could we learn from such a simple model? 
+
+What we found in our initial simulations is that about 1/3 tends to be a cutoff or threshold for seeing segregation in neighborhoods. **In established neighborhoods, would this threshold also drive change?**
+
+--
+
+Hwang and Sampson (2014) found that there is **indeed a 'threshold cutoff' for gentrification that appears to be around 40%.** Comparing that to the simple Schelling segregation model, 40% is just over 3/8 neighbors being from a different group. [Hwang and Sampson (2014).](https://journals.sagepub.com/doi/10.1177/0003122414535774)]
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

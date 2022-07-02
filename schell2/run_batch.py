@@ -4,7 +4,7 @@ from mesa.batchrunner import FixedBatchRunner
 fixed_parameters = {
     "height": 20,
     "width": 20,
-    "density": 0.8,
+    "num_agents": 350,
     "minority_pc": 0.4,
     "homophily0": 0.25,
 }
@@ -16,19 +16,15 @@ parameters_list = [{"homophily1": 0.25},
 batch_run = FixedBatchRunner(SegModel, parameters_list,
                              fixed_parameters, iterations=10,
                              model_reporters={
-                                 "Pct Happy": lambda m: round(100 * m.happy / (m.density * m.width * m.height), 1),
+                                 "Pct Happy": lambda m: round(100 * m.happy / m.num_agents, 1),
                                  "Pct Happy Group A": lambda m: round(
-                                     100 * m.happy0 / ((1 - m.minority_pc) * m.density * m.width * m.height), 1),
+                                     100 * m.happy0 / m.num_agents0, 1),
                                  "Pct Happy Group B": lambda m: round(
-                                     100 * m.happy1 / (m.density * m.minority_pc * m.width * m.height), 1),
-                                 "Avg pct similar neighbors": lambda m: round(100 * m.similar_g / (
-                                         8 * m.density * m.width * m.height), 1),
-                                 "Avg pct similar neighbors (A)": lambda m: round(100 * m.similar_g0 / (
-                                         8 * (1 - m.minority_pc) * m.density * m.width * m.height), 1),
-                                 "Avg pct similar neighbors (B)": lambda m: round(100 * m.similar_g1 / (
-                                         8 * m.minority_pc * m.density * m.width * m.height), 1)
-                             },
-                             max_steps=1)
+                                     100 * m.happy1 / m.num_agents1, 1),
+                                 "Avg pct similar neighbors": lambda m: round(100 * m.similar_g / m.neighbors_g, 1),
+                                 "Avg pct similar neighbors (A)": lambda m: round(100 * m.similar_g0/ m.neighbors_g0, 1),
+                                 "Avg pct similar neighbors (B)": lambda m: round(100 * m.similar_g1/ m.neighbors_g1, 1)},
+                             max_steps=10)
 
 # run the batches of your model with the specified variations
 batch_run.run_all()

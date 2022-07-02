@@ -1,0 +1,499 @@
+---
+title: "Getting Started with Agent-Based Models"
+author: "Jean Clipperton"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+    seal: false
+    
+---
+class: title-slide, left, bottom
+background-image: url(images/model_example.gif)
+background-size: cover
+
+.large[##**Getting Started with <br> Agent-Based Models** ]
+**Jean Clipperton** 
+
+
+
+---
+class: inverse, middle
+# Goals for today:
+1. Learn setup for Agent-Based Modeling.
+2. Explore a classic ABM model. 
+
+--
+3. Have fun. (!)
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{css}
+.small_font_page {
+  font-size: 20px;
+}
+
+.large_font_page{
+  font-size: 50px;
+}
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_panelset()
+xaringanExtra::use_freezeframe()
+xaringanExtra::use_banner(
+  #top_left = "",
+  #top_right = " ",
+  bottom_right = "Slides & Code: https://github.com/jmclip/ABM",
+  exclude = "inverse"
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_light(
+  base_color = "#800000", 
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Fira Mono"), 
+  text_font_size = "28px",
+  footnote_font_size = "0.7rem",
+  text_slide_number_font_size = "0.7rem",
+  header_h1_font_size = "2.25rem",
+  header_h2_font_size = "3.0rem",
+)
+```
+
+
+---
+# About me
+PhD in Political Science from University Michigan with certificate in Complex Systems and CRLT's Graduate Teaching Certificate. Research focuses upon institutions (EU directives, institutional design and change) and teaching and learning (do attendance policies matter? how to best structure student learning?).
+
+- Co-edited free textbook on Empirical Research Methods for undergraduates
+- Mentor and developed advanced quantitative methods coursework
+- Teach quantitatively-focused courses in Political Science, Sociology, and Mathematical Methods in the Social Sciences
+
+---
+# Intro & agenda  
+Today we'll cover the foundations of getting started in modeling, giving an overview of models, their uses and applications, and how they might feature into a course. 
+
+--
+ - Talk context
+ - Intro to Agent-Based Models
+ - Model components
+ - Application (Schelling)
+ - Adapting models / varying parameters
+ - Course framing
+ - Conclusions
+
+
+---
+# Some assumptions:
+
+- You're all smart people
+
+--
+
+- You may have not seen an agent-based model (or have heard of it)
+
+--
+
+- This talk will be conceptually connected to how we'd build ideas in a course, but in the interest of time, **I won't go into as much detail as I typically would in a course.** We're also going to sacrifice some interactive coding-ness. 
+
+---
+# What is an Agent-Based Model (ABM)?
+ABMs allow you to focus on a) the evolution of behavior / system and b) explicitly engage with heterogeneous actors. 
+
+--
+
+In contrast to other types of models, **ABMs permit heterogeneous agents who can have different experiences** and allow you to explore system-level effects, the path to equilibrium, and **emergent phenomena.** 
+ 
+---
+
+# ABMs vs. other models:
+
+- **Linear Regression**: focus upon large-scale relationships instead of individual-level factors.
+
+- **Systems Dynamics**: focus on the system from a high level; typically need an understanding of the equations governing the system. 
+
+- **Game Theory**: can look at final equilibrium of the system, without information about what occurs on the way there nor how long it will take. 
+
+- **ABM**: 'Bottom-up' approach using simple assumptions, analyzes how the system behaves and emergent phenomena that result from the model.  
+
+
+---
+# ABM setup and components: 
+### Who does what, how?
+- **Actors** these can be people, animals, businesses, etc. The *units* you care about
+- **Parameters** (AKA *variables*) these are the things you're going to vary
+- **Framework**  structure for interaction 
+  -Structure ecosystem / environment for actor
+  - Define movement / behavior (where are they placed, how they interact, move, etc.) 
+
+---
+
+# ABM setup and components: 
+### Who does what, how?
+- **Actors** (what are the units / agents /actors)
+  - Initialize with identical or varied attributes
+- **Parameters** (AKA *variables*) 
+  - Consider range and other variation / combination potentials
+- **Framework**  structure for interaction 
+  -Structure ecosystem / environment for actor
+  - Define movement / behavior (where are they placed, how they interact, move, etc.) 
+    
+    
+---
+# Applications
+ABMs allow you to evaluate system dynamics from relatively simple initial conditions and have applications in many fields.
+
+- **Political Science** emergence of markets, effects of institutional change
+- **Sociology** neighborhood segregation, evolution of cultural groups
+- **Economics** tragedy of the commons, market bubbles
+- **Ecology** flocking, predator/prey models, ecosystems
+- **Epidemiology** pandemic modeling, health disparities, public health policy analysis
+
+
+---
+# Example: Schelling's segregation model
+Today, we're going to go over a classic model that is intuitive to understand, somewhat surprising in its findings, and easily customizable: Schelling's segregation model. 
+
+.footnote[Schelling, T. C. (1978). *Micromotives and macrobehavior.* New York: Norton.]
+
+
+---
+# Example: Schelling's segregation model
+
+- The model seeks to **explore why we might see stark segregation**, even if focusing *solely* on actor behavior / motivation between two groups, and assuming somewhat benign intentions (no explicit dislike / hatred).
+
+--
+
+- Schelling's model is *one piece* in exploring and understanding patterns we see in housing markets and neighborhood patterns. 
+
+---
+# Example: ABM setup  
+ - **Actors** (what are the units / agents /actors) 
+     + <span style="color:darkblue">Need two types of actors (why two?). </span> 
+ - **Parameters** (AKA *variables*) (what are the possible values/items that can be incorporated)
+      + <span style="color:darkblue"> Agent type. </span>  
+      + <span style="color:darkblue"> Agent tolerance threshold. </span> 
+ - **Framework**  structure for interaction (in what way are actors aggregating information from their environment)
+    * <span style="color:darkblue"> Start with random placement. </span>
+    * <span style="color:darkblue"> Neighborhood / area to scan. </span>
+    * <span style="color:darkblue"> Evaluate their satisfaction.</span>
+    * <span style="color:darkblue"> Move somewhere if unsatisfied. </span>
+
+---
+# Schelling's model: preview
+
+```{r, out.width= "60%", fig.align="center", fig.cap="Where we're going"}
+knitr::include_graphics("images/model_example.gif")
+```
+---
+# Schelling's model: file structure
+
+Alternatives: Jupityr notebook, Google Colab, or IDE of choice. 
+
+- **Framework** for running the ABM: [Mesa](https://pypi.org/project/Mesa/) 
+    - [Documentation at this link](https://mesa.readthedocs.io/_/downloads/en/latest/pdf/)
+- **File structure**: start with three files.
+  - *Model*: actualize agents and their environment.
+  - *Server*: visualize the model.
+  - *Run*: run the model(not always necessary for simple models but good to build the habit now!).
+  - *README*: file with a model overview.
+
+---
+class: inverse, large_font_page, middle  
+
+Our organizing principle: 
+--
+
+.right[ 
+## KEEP IT SIMPLE 
+]
+
+---
+# Designing the model: model file structure
+In the interest of time, we'll focus on the model file. We'll need to think about our agents, what they can do, and how. 
+
+--
+
+You'll have two main classes: your **agent class** (can divide up by type) and the **model class**. 
+
+---
+# Designing the model: model file structure
+
+- Import Mesa and anything else you'll need.
+- **Agent class**: 
+  - Initialize properties within the agents (e.g. happiness).
+  - Define what happens for an agent within a time step.
+- **Model class**:  
+  - Define model-level parameter values (e.g. desired similarity level).
+  - Define what happens at the model level in a time step (e.g. run the model until all agents are happy).
+  - Collect data.
+
+---
+class: large_font_page, inverse, middle 
+<br>
+ ##All models are wrong, but some are useful.
+ .center[*George Box*]
+
+---
+# Complicating the model
+We might think that while simple, we've sacrificed *too much* and we want to recapture some of the complexity of the situation. Let's consider ways we might complicate this model in a meaningful way: 
+--
+
++ **Types** of agents (could consider multiple types).
++ **Sensitivity** of agents (some are more/less tolerant).
++ **Initialization** of the model (could think about 'geographic' placement of actors/agents).
++ Additional **attributes** of actors (e.g. wealth).
+
+---
+# Complicating the model: 
+**Agent sensitivity / tolerance** 
+There are many ways we could think about agent sensitivity / tolerance: The big focus might be across or within group tolerance. 
+
+**Across group tolerance** Here, our concern is whether the two groups have similar levels of tolerance. 
+
+**Within group tolerance** Here, our concern is whether the agents within each group have the same tolerance threshold. 
+--
+
+<center><font size="50">Our motto is always <br> KEEP IT SIMPLE</center></font>
+
+---
+# Schelling with two levels of tolerance
+
+```{r, out.width= "80%", fig.align="center"}
+knitr::include_graphics("images/schell2.png")
+```
+<br>
+--
+**Predict what you think will happen** - *in particular, consider how the other parameter values (proportion of group size, density) may also contribute.* 
+
+
+---
+# Output/analysis: model metrics
+Here is the (not that pretty) output we get.We could clean this up, but it's still a graphic and difficult to include in other work.  
+
+```{r, out.width= "45%", fig.align="center"}
+knitr::include_graphics("images/schell2c.png")
+```
+
+---
+# Exploring your output beyond the GUI
+You might want nicer graphics from one or multiple runs. In these cases, you'll want to export your data. 
+--
+There are multiple ways you might do this -- I added separate files to allow you to 
+
+1. **Export the data** from the specific run in the gui, 
+2. bypass the gui and just do a single run, 
+3. Do a **batch run** where you run the model multiple times and to get a sense of trends, 
+or 
+4. Do a **parameter sweep** where you explore how varying the parameters may lead to different outcomes
+5. Do a **batch run of parameter sweeps**
+
+---
+class: small_font_page
+# Exporting your data and running your own analysis
+.panelset[
+
+.panel[.panel-name[GUI]
+For example, here are the graphics we're generally tied to in the GUI:
+
+
+```{r , out.width= "30%", fig.align="center", fig.cap="Run with seed set to 10"}
+knitr::include_graphics("images/schell2_seed10.png")
+```
+]
+
+.panel[.panel-name[Exported & Plotted:Overall]
+```{r out.width= "56%", fig.align="center" }
+library(ggplot2)
+seg_gui <- read.csv("~/Library/CloudStorage/OneDrive-NorthwesternUniversity/ABM/schell2/data/seg_model_gui_run_data.csv")
+
+ggplot(seg_gui, aes(X, X..Happy )) +
+  geom_line(color="black", size=2)+
+  scale_x_continuous("Model Time Step", breaks=seq(0, 110, 25))+
+  scale_y_continuous("Number of Happy Agents", breaks=seq(0, 400, 50)) +
+  labs(title="Happiness over model run",
+       caption="110 time steps with seed 10") +
+  theme_bw() +
+  theme(text = element_text(size = 20))   
+
+```
+]
+
+.panel[.panel-name[Exported & Plotted:Groups]
+```{r out.width= "56%", fig.align="center" }
+library(ggplot2)
+seg_gui <- read.csv("~/Library/CloudStorage/OneDrive-NorthwesternUniversity/ABM/schell2/data/seg_model_gui_run_data.csv")
+
+ggplot(seg_gui) +
+  geom_line(aes(X, y=X..Happy.Group.A, color="Group A"), size = 2) +
+  geom_line(aes(X, y=X..Happy.Group.B, color="Group B"), size = 2) +
+  scale_x_continuous("Model Time Step", breaks=seq(0, 300, 25)) +
+  scale_y_continuous("Proportion of Happy Agents", breaks=seq(0, 1, 0.1)) +
+  labs(title="Happiness over model run", 
+       subtitle= "by agent group",
+       caption="110 time steps with seed 10") +
+  scale_color_manual(name = "Agent Groups", 
+                     values = c("Group A" = "darkred", 
+                                "Group B" = "mediumpurple")) +
+  theme_bw() +
+  theme(legend.position="bottom", 
+        text = element_text(size = 20),
+        plot.subtitle=element_text(size=16, face="italic", color="grey40")) 
+```
+]
+]
+
+---
+# Batch Runs / Parameter Sweeps
+These models come from a process with stochastic elements. To explore what happens overall, you might want to either **run your model multiple times and/or do multiple parameter sweeps** where you explore the relationships between changing a variable and the outcome. 
+
+--
+
+**Parameter sweeps** usually involve varying one or two parameters across key values. 
+
+---
+# Batch Runs / Parameter Sweeps
+
+```{r out.width= "40%", fig.align="center" }
+library(tidyverse)
+library(ggplot2)
+seg_batch0 <- read.csv("~/Library/CloudStorage/OneDrive-NorthwesternUniversity/ABM/schell2/data/seg_model_batch_run_data.csv")
+
+# tidy and reshape the data
+seg_batch <- seg_batch0 %>% 
+              group_by(homophily1, X) %>%
+              mutate(avg_happy = mean(Happy, na.rm = TRUE))
+
+# plot the data
+ggplot(seg_batch) +
+  geom_line(aes(X, y=X..Happy.Group.A, color="Group A"), size = 2) +
+  geom_line(aes(X, y=X..Happy.Group.B, color="Group B"), size = 2) +
+  scale_x_continuous("Model Time Step", breaks=seq(0, 300, 25)) +
+  scale_y_continuous("Proportion of Happy Agents", breaks=seq(0, 1, 0.1)) +
+  labs(title="Happiness over model run", 
+       subtitle= "by agent group",
+       caption="110 time steps with seed 10") +
+  scale_color_manual(name = "Agent Groups", 
+                     values = c("Group A" = "darkred", 
+                                "Group B" = "mediumpurple")) +
+  theme_bw() +
+  theme(legend.position="bottom", 
+        text = element_text(size = 20),
+        plot.subtitle=element_text(size=16, face="italic", color="grey40")) 
+```
+
+---
+# Applications: Housing  
+
+Schelling's model can help us understand what we observe around us, and help us further **explore implications for neighborhood change**. 
+
+Future complications and explorations of Schelling's model might **explore how to incorporate the delay and cost into moving** to better anticipate how, for example, Minneapolis' planned 2040 ban on single-family zoning. 
+
+---
+# Applications: Minneapolis zoning and racial covenants
+.pull-left[
+```{r, out.width= "85%", fig.align="left"}
+knitr::include_graphics("images/mn_zoning_crop.png")
+```
+<tab>.footnote[[&nbsp; &emsp; Source: NPR on MN's housing ban](https://www.npr.org/2020/06/18/877460056/minneapolis-has-a-bold-plan-to-tackle-racial-inequity-now-it-has-to-follow-throu)]
+]
+--
+.pull-right[
+- Initialize a model to **represent MN** (use Census data).
+- Allow for **high/low tolerance within/across groups**.
+- Multi-grid (Mesa module) or other option to permit **multiple agents on one grid space**.
+- Add agent wealth and cost to moving.
+]
+
+---
+# Applications:  **How might neighborhoods restructure?**
+
+.pull-left[
+```{r, out.width= "85%", fig.align="center"}
+knitr::include_graphics("images/mn_zoning_crop.png")
+```
+]
+
+.pull-right[
+```{r, out.width= "85%", fig.align="center"}
+knitr::include_graphics("images/schell2.png")
+```
+]
+
+
+
+
+
+---
+# Recap: what are ABMs?
+
+- ABMs offer **flexibility to explore individually-driven analyses and simulations**
+- ABMs are structured around:
+  - Agents.
+  - Models/the world you setup.
+- Data can be collected on a run-by-run basis.
+- You can (and should) do multiple runs of your model across multiple parameter values. 
+
+
+---
+# Course framing
+This was an excerpt and condensation of a course on ABM. Below I provide a loose course outline. 
+
+###Course topics
+- Intro / background
+- Applications / canonical models
+- Diagnostics
+- Output / model analysis
+- Robustness checks
+- Getting it 'right' --  the art of modeling
+
+
+---
+class: inverse, middle, center
+
+##Questions?
+ Thank you!
+
+---
+# Setting a seed
+A seed is effectively a starting point for a random number generator (since they're not truly random!).
+
+We don't go into it much here, but setting a seed allows for reproducible results. Here, I set an arbitrary seed so that if you run the model, you could replicate my results. If we were using this model for analyses, we'd record the seeds from our runs but wouldn't necessarily proscribe one. 
+
+---
+# Classic / canonical models:
+
+
+---
+# Applications & Connections to Research
+###What could we learn from such a simple model? 
+
+One application can be thinking about **gentrification**, for example in how we see neighborhoods changing over time. **Schelling's model helps us understand that having a low threshold for similar neighbors can produce staggering levels of segregation,** without even accounting for institutional structures that can entrench housing / employment practices or otherwise amplify and perpetuate differences across groups. 
+
+---
+# Applications & Connections to Research
+###What could we learn from such a simple model? 
+
+What we found in our initial simulations is that about 1/3 tends to be a cutoff or threshold for seeing segregation in neighborhoods. **In established neighborhoods, would this threshold also drive change?**
+
+--
+
+Hwang and Sampson (2014) found that there is **indeed a 'threshold cutoff' for gentrification that appears to be around 40%.** Comparing that to the simple Schelling segregation model, 40% is just over 3/8 neighbors being from a different group. [Hwang and Sampson (2014).](https://journals.sagepub.com/doi/10.1177/0003122414535774)]
+
+
+
+
+
+
+
+

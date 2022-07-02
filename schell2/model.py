@@ -11,21 +11,28 @@ class SegAgent(Agent):
         self.pos = pos
         self.type = agent_type
         self.similar = 0
+        self.neighbors_a = 1
 
     # describe what happens in each step for the agents
     # agents check surroundings and count neighbors of the same type
     def step(self):
         self.similar = 0
+        self.neighbors_a = 0
+
         for neighbor in self.model.grid.iter_neighbors(self.pos, True):
+            self.model.neighbors_g += 1
+            self.neighbors_a += 1
+
             if neighbor.type == self.type:
                 self.model.similar_g += 1
-                self.similar +=1
+                self.similar += 1
 
                 if self.type == 0:
                     self.model.similar_g0 += 1
+                    self.model.neighbors_g0 += 1
                 elif self.type == 1:
                     self.model.similar_g1 += 1
-
+                    self.model.neighbors_g1 += 1
 
         # If unhappy, move:
         # this permits different types to have different group thresholds
@@ -56,8 +63,8 @@ class SegAgent(Agent):
 # set up the model and initalize the world
 class SegModel(Model):
     # adding agents to the world
-    def __init__(self, width, height, density, minority_pc, homophily0, homophily1):
-        self.density = density
+    def __init__(self, width, height, num_agents, minority_pc, homophily0, homophily1):
+        self.num_agents = num_agents
         self.minority_pc = minority_pc
         self.homophily0 = homophily0
         self.homophily1 = homophily1
@@ -71,21 +78,11 @@ class SegModel(Model):
         self.similar_g = 0
         self.similar_g0 = 0
         self.similar_g1 = 0
-        self.datacollector = DataCollector(
-            model_reporters={"Pct Happy": lambda m: round(100 * m.happy / (density * width * height), 1),
-                             "Pct Happy Group A": lambda m: round(100 * m.happy0 / ((1 - minority_pc) * density * width * height), 1),
-                             "Pct Happy Group B": lambda m: round(100 * m.happy1 / (minority_pc * density * width * height), 1),
-                             "Avg pct similar neighbors": lambda m: round(100 * m.similar_g / (8 * density * width * height), 1),
-                             "Avg pct similar neighbors (A)": lambda m: round(100 * m.similar_g0 / (8 * (1 - minority_pc) * density * width * height), 1) ,
-                             "Avg pct similar neighbors (B)": lambda m: round(100 * m.similar_g1 / (8 * minority_pc * density * width * height), 1)},
-                              # Model-level count of happy agents  + subgroup counts
-            agent_reporters={"Pct similar neighbors": lambda a: round(100 * a.similar / 8, 1),
-                             "Agent type": lambda a: a.type}
-                             # Agent-level reporters can allow for individual measures
-        )
-
-        # Set up agents
-        self.num_agents = round(density * width * height)
+        self.num_agents0 = 0
+        self.num_agents1 = 0
+        self.neighbors_g = 1
+        self.neighbors_g0 = 1
+        self.neighbors_g1 = 1
 
         for i in range(self.num_agents):
             x = self.random.randrange(self.grid.width)
@@ -93,28 +90,47 @@ class SegModel(Model):
 
             if self.random.random() < self.minority_pc:
                 self.agent_type = 1
+                self.num_agents1 += 1
             else:
                 self.agent_type = 0
+                self.num_agents0 += 1
 
             agent = SegAgent(i, self, self.agent_type)
             self.schedule.add(agent)
             self.grid.position_agent(agent, (x, y))
 
         self.running = True  # need this for batch runner
+
+        self.datacollector = DataCollector(
+            model_reporters={"Pct Happy": lambda m: round(100 * m.happy / m.num_agents, 1),
+                             "Pct Happy Group A": lambda m: round(100 * m.happy0 / m.num_agents0, 1),
+                             "Pct Happy Group B": lambda m: round(100 * m.happy1 / m.num_agents1, 1),
+                             "Avg pct similar neighbors": lambda m: round(100 * m.similar_g / m.neighbors_g, 1),
+                             "Avg pct similar neighbors (A)": lambda m: round(100 * m.similar_g0 / m.neighbors_g0,
+                                                                              1),
+                             "Avg pct similar neighbors (B)": lambda m: round(100 * m.similar_g1 / m.neighbors_g1,
+                                                                              1)},
+            # Model-level count of happy agents  + subgroup counts
+            agent_reporters={"Similar_empty": lambda a: round(100 * a.similar / 8, 1),
+                             "Similar_no_empty": lambda a: round(100 * a.similar / a.neighbors_a, 1),
+                             "Agent type": lambda a: a.type}
+            # Agent-level reporters can allow for individual measures
+        )
         self.datacollector.collect(self)
 
     # define what happens in one step of the model
     # model stopped when all agents are happy
     def step(self):
-        """
-        Run one step of the model. If All agents are happy, halt the model.
-        """
         self.happy = 0  # Reset counter of happy agents
         self.happy0 = 0  # Reset counter of happy agents
         self.happy1 = 0  # Reset counter of happy agents
         self.similar_g = 0  # Reset counter of similar agents
         self.similar_g0 = 0  # Reset counter of similar agents
         self.similar_g1 = 0  # Reset counter of similar agents
+
+        self.neighbors_g = 0  # Reset counter of neighborhood agents to 1 for math
+        self.neighbors_g0 = 0  # Reset counter of neighborhood agents to 1 for math
+        self.neighbors_g1 = 0  # Reset counter of neighborhood agents to 1 for math
         self.schedule.step()
 
         if self.happy == self.schedule.get_agent_count():

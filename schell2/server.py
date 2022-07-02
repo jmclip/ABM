@@ -12,28 +12,27 @@ class HappyElement(TextElement):
 
     def render(self, model):
         return "% Happy agents: " + str(round(
-            (model.happy / (model.density * model.width * model.height)) * 100, 1)) + "%"
+            (model.happy / model.num_agents) * 100, 1)) + "%"
 
 
 class SimilarElement(TextElement):
 
     def render(self, model):
-        similar_calc = model.similar_g / (8 * model.density * model.width * model.height) * 100
+        similar_calc = model.similar_g / model.neighbors_g * 100
         return "Avg. % similar neighbors: " + str(round(similar_calc, 1)) + "%"
 
 
 class SimilarElement0(TextElement):
 
     def render(self, model):
-        similar_calc0 = model.similar_g0 / (
-                8 * (1 - model.minority_pc) * model.density * model.width * model.height) * 100
+        similar_calc0 = model.similar_g0 / model.neighbors_g0 * 100
         return "Avg. % similar neighbors (A): " + str(round(similar_calc0, 1)) + "%"
 
 
 class SimilarElement1(TextElement):
 
     def render(self, model):
-        similar_calc1 = model.similar_g1 / (8 * model.minority_pc * model.density * model.width * model.height) * 100
+        similar_calc1 = model.similar_g1 / model.neighbors_g1 * 100
         return "Avg. % similar neighbors (B): " + str(round(similar_calc1, 1)) + "%"
 
 
@@ -63,7 +62,8 @@ happy_chart1 = ChartModule([{"Label": "Pct Happy Group B", "Color": "mediumpurpl
 model_params = {
     "height": 20,
     "width": 20,
-    "density": UserSettableParameter('slider', "Agent density", 0.8, 0.1, 1.0, 0.1),
+    "width": 20,
+    "num_agents": UserSettableParameter('slider', "Number Agents", 350, 10, 400, 10),
     "minority_pc": UserSettableParameter('slider', "% group B", 0.3, 0.00, 1.0, 0.05),
     "homophily0": UserSettableParameter('slider', "Homophily Group A: (Desired % of matching neighbors) ", 0.25, 0, 1,
                                         0.125),
