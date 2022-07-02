@@ -62,13 +62,6 @@ class SegAgent(Agent):
 
 
 
-
-
-            #if self.type == 0:
-               # self.model.neighbors_g0 += self.agent.neighbors_a
-           # elif self.type == 1:
-                #self.model.neighbors_g1 += self.agent.neighbors_a
-
     # set up the actions available to agents
     def move(self):
         possible_steps = self.model.grid.get_neighborhood(
@@ -134,9 +127,9 @@ class SegModel(Model):
                              "Avg pct similar neighbors": lambda m: m.pct_neighbors,
                              "Avg pct similar neighbors (A)": lambda m: m.pct_neighbors0,
                              "Avg pct similar neighbors (B)": lambda m: m.pct_neighbors1,
-                             "Avg pct similar neighbors (count empty)": lambda m: m.pct_neighbors,
-                             "Avg pct similar neighbors (A) (count empty)": lambda m: m.pct_neighbors0,
-                             "Avg pct similar neighbors (B) (count empty)": lambda m: m.pct_neighbors1,
+                             "Avg pct similar neighbors (count empty)": lambda m: m.pct_neighbors_e,
+                             "Avg pct similar neighbors (A) (count empty)": lambda m: m.pct_neighbors_e0,
+                             "Avg pct similar neighbors (B) (count empty)": lambda m: m.pct_neighbors_e1,
                              "Num Agents": lambda m: m.num_agents,
                              "Num Agents (A)": lambda m: m.num_agents0,
                              "Num Agents (B)": lambda m: m.num_agents1,
@@ -160,10 +153,18 @@ class SegModel(Model):
         self.similar_g = 0  # Reset counter of similar agents
         self.similar_g0 = 0  # Reset counter of similar agents
         self.similar_g1 = 0  # Reset counter of similar agents
+        self.neighbors_g = 0
+        self.neighbors_g0 = 0
+        self.neighbors_g1 = 0
 
-        self.neighbors_g = 0  # Reset counter of neighborhood agents
-        self.neighbors_g0 = 0  # Reset counter of neighborhood agents
-        self.neighbors_g1 = 0  # Reset counter of neighborhood agents
+        for agent in model.schedule.agents:
+            self.neighbors_g.append(agent.neighbors_a)
+
+            if agent.type == 0:
+                self.neighbors_g0.append(agent.neighbors_a)
+            else:
+                self.neighbors_g1.append(agent.neighbors_a)
+
         self.schedule.step()
 
 
