@@ -22,13 +22,7 @@ class SegAgent(Agent):
         self.a_pct_similar = 0
 
         for neighbor in self.model.grid.iter_neighbors(self.pos, True):
-            self.model.neighbors_g += 1
             self.neighbors_a += 1
-
-            if self.type == 0:
-                self.model.neighbors_g0 += 1
-            elif self.type == 1:
-                self.model.neighbors_g1 += 1
 
             if neighbor.type == self.type:
                 self.model.similar_g += 1
@@ -157,13 +151,13 @@ class SegModel(Model):
         self.neighbors_g0 = 0
         self.neighbors_g1 = 0
 
-        for agent in model.schedule.agents:
-            self.neighbors_g.append(agent.neighbors_a)
+        for agent in self.schedule.agents:
+            self.neighbors_g += agent.neighbors_a
 
             if agent.type == 0:
-                self.neighbors_g0.append(agent.neighbors_a)
+                self.neighbors_g0 += agent.neighbors_a
             else:
-                self.neighbors_g1.append(agent.neighbors_a)
+                self.neighbors_g1 += agent.neighbors_a
 
         self.schedule.step()
 
