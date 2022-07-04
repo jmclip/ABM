@@ -1,4 +1,3 @@
-import mesa
 from mesa.visualization.modules import CanvasGrid
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import ChartModule
@@ -11,7 +10,7 @@ def get_happy_agents(model):
     #Display a text count of how many happy agents there are.
    return f"Happy agents: {model.happy}"
 
-
+# set up agents
 def schelling_draw(agent):
 
     if agent is None:

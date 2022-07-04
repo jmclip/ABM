@@ -62,7 +62,6 @@ class SegModel(Model):
         # Set up agents
         # We use a grid iterator that returns
         # the coordinates of a cell as well as
-        # its contents. (coord_iter)
 
         self.num_agents=round(density * width * height)
         #print("Expecting agents: " + str(self.num_agents))
