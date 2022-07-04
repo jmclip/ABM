@@ -1,4 +1,3 @@
-import mesa
 from mesa.visualization.modules import CanvasGrid
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import ChartModule, TextElement
@@ -7,7 +6,8 @@ from mesa.visualization.UserParam import UserSettableParameter
 from model import SegModel
 
 
-# calculate how many happy agents
+# these next portions allow for the values
+# to appear in the gui for the model
 class HappyElement(TextElement):
 
     def render(self, model):
@@ -20,11 +20,15 @@ class SimilarElement(TextElement):
     def render(self, model):
         return "Avg. % similar neighbors: " + str(model.pct_neighbors) + "%"
 
+
 class SimilarElement_g(TextElement):
 
     def render(self, model):
-        return "Groups avg. % similar neighbors: (A) " + str(model.pct_neighbors0) + "%" + " (B) " + str(model.pct_neighbors1) + "%"
+        return "Groups avg. % similar neighbors: (A) " + str(model.pct_neighbors0) + "%" + " (B) " + str(
+            model.pct_neighbors1) + "%"
 
+
+# define and set up agent visualization
 def schelling_draw(agent):
     if agent is None:
         return
@@ -39,6 +43,7 @@ def schelling_draw(agent):
     return portrayal
 
 
+# set up how and what we're calling for the gui
 happy_element = HappyElement()
 similar_element = SimilarElement()
 similar_element_g = SimilarElement_g()
@@ -47,16 +52,17 @@ happy_chart = ChartModule([{"Label": "Pct Happy", "Color": "Black"}])
 happy_chart0 = ChartModule([{"Label": "Pct Happy Group A", "Color": "Maroon"}])
 happy_chart1 = ChartModule([{"Label": "Pct Happy Group B", "Color": "mediumpurple"}])
 
+# set up how the visualization will look
 model_params = {
     "height": 20,
     "width": 20,
     "width": 20,
     "num_agents": UserSettableParameter('slider', "Number Agents", 350, 10, 400, 10),
     "minority_pc": UserSettableParameter('slider', "% group B", 0.35, 0.00, 1.0, 0.05),
-    "homophily0": UserSettableParameter('slider', "Homophily Group A: (Desired % of matching neighbors) ",
-                                        0.375, 0, 1, 0.125),
-    "homophily1": UserSettableParameter('slider', "Homophily Group B: (Desired % of matching neighbors) ",
-                                        0.25, 0, 1, 0.125),
+    "intolerance0": UserSettableParameter('slider', "Intolerance Group A: (Desired % of matching neighbors) ",
+                                          0.375, 0, 1, 0.125),
+    "intolerance1": UserSettableParameter('slider', "Intolerance Group B: (Desired % of matching neighbors) ",
+                                          0.25, 0, 1, 0.125),
 }
 
 # this is where we call the different elements we're going to be visualizing

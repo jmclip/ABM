@@ -1,8 +1,6 @@
-,Pct Happy,Pct Happy Group A,Pct Happy Group B,Avg pct similar neighbors,Avg pct similar neighbors (A),Avg pct similar neighbors (B),Avg pct similar neighbors (count empty),Avg pct similar neighbors (A) (count empty),Avg pct similar neighbors (B) (count empty),Num Agents,Num Agents (A),Num Agents (B),Pct group B,Homophily (A),Homophily (B)
-0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,350,237,113,0.35,0.375,0.25
-1,90.9,97.9,76.1,55.7,67.1,32.6,55.7,67.1,32.6,350,237,113,0.35,0.375,0.25
-2,95.7,99.2,88.5,58.6,68.9,38.3,58.6,68.9,38.3,350,237,113,0.35,0.375,0.25
-3,96.6,100.0,89.4,60.2,70.1,40.6,60.2,70.1,40.6,350,237,113,0.35,0.375,0.25
-4,98.3,100.0,94.7,61.5,71.0,43.4,61.5,71.0,43.4,350,237,113,0.35,0.375,0.25
-5,99.1,100.0,97.3,61.9,71.0,44.4,61.9,71.0,44.4,350,237,113,0.35,0.375,0.25
-6,99.1,100.0,97.3,61.8,71.1,44.0,61.8,71.1,44.0,350,237,113,0.35,0.375,0.25
+,Pct Happy,Pct Happy Group A,Pct Happy Group B,Avg pct similar neighbors,Avg pct similar neighbors (A),Avg pct similar neighbors (B),Avg pct similar neighbors (count empty),Avg pct similar neighbors (A) (count empty),Avg pct similar neighbors (B) (count empty),Num Agents,Num Agents (A),Num Agents (B),Pct group B,Intolerance (A),Intolerance (B)
+0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,350,228,122,0.35,0.375,0.25
+1,84.0,89.9,73.0,0.0,0.0,0.0,0.0,0.0,0.0,350,228,122,0.35,0.375,0.25
+2,94.0,96.1,90.2,54.2,64.5,34.9,47.5,56.5,30.6,350,228,122,0.35,0.375,0.25
+3,95.7,97.4,92.6,61.2,70.3,44.2,54.5,62.6,39.2,350,228,122,0.35,0.375,0.25
+4,97.4,97.4,97.5,63.8,72.5,47.4,56.4,64.2,41.9,350,228,122,0.35,0.375,0.25

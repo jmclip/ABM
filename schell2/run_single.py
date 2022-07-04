@@ -2,8 +2,7 @@ from model import SegModel
 
 # Set your parameter values for one run
 # Reminder that the model takes on these parameter values:
-# width, height, num_agents, minority_pc, homophily0, homophily1
-
+# width, height, num_agents, minority_pc, intolerance0, intolerance1
 model = SegModel(20, 20, 350, 0.25, 0.25, 0.375)
 for t in range(300):
     model.step()
