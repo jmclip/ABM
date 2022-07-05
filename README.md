@@ -49,6 +49,15 @@ python run.py
 
 This should automatically open a browser window at [http://127.0.0.1:8500/](http://127.0.0.1:8500/). You can then adjust the parameters from there. 
 
+#### Running the GUI
+There are three (schell1) or four (schell2) parameters you can adjust in the model using the sliders: 
+* *Num Agents*: how many agents there are (note that if you go up to 400, the grid will be full and the agents won't be able to move).
+* *% Group B*: the percentage of total agents who are in Group B (remainder are in Group A). 
+* *Intolerance*: this is the proportion of neighbors each agent wants to have in their 'neighborhood' (the 8 grid squares immediately around them). 
+* *Intolerance A / B*: these measures replace Intolerance in schell2, above, so that each group can potentially have a different intolerance level. 
+
+After you adjust these values, you must **FIRST PUSH RESET** and then can click *start* (which will run the model until you stop it) or *step*, which will do one time step of the model. 
+
 ### Single and batch runs on your machine
 The process is the same for these as above with the code for each differing. You can edit the files to change the initial parameter values. The key distinction is that there won't be a GUI interface. The code you run will be either
 
