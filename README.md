@@ -27,4 +27,41 @@ Within each of the two models (schell1 and schell2), you'll find the following f
 - run_batch.py *(for schell2) this allows you to run multiple iterations and / or run the model with different parameter value combinations, and exports the results to a csv*
 
 # How to run this model:
-You can either download the zipped file from this repo or you can go to [this Google Colab notebook for Schell1](https://colab.research.google.com/drive/11shBk82BSt6WnDA_64HAW0haok6fLwTk#scrollTo=BlZ1knJYPMjb) and run the model from there. If you download the files from here, you'll need an IDE of some kind (e.g. PyCharm) to run them. For Google Colab, you won't need to download anything. 
+You can either download the zipped file from this repo or you can go to [this Google Colab notebook for Schell1](https://colab.research.google.com/drive/11shBk82BSt6WnDA_64HAW0haok6fLwTk#scrollTo=BlZ1knJYPMjb) and run the model from there. For Google Colab, you won't need to download anything. 
+
+If you have python downloaded on your machine already and want to run the files locally, see below.
+
+## Running the model from downloaded files
+If you want to run the model after you download the files, you can either run it directly in your IDE of choice (e.g. PyCharm), or you can run it from the command line in terminal. 
+
+### Running the Gui on your machine from terminal
+First, install Mesa:
+
+```
+!pip install mesa
+```
+
+Download the file, change your directory to the model of your choice (schell1 or schell2). Then, run the following code:
+
+```
+python run.py
+```
+
+This should automatically open a browser window at [http://127.0.0.1:8500/](http://127.0.0.1:8500/). You can then adjust the parameters from there. 
+
+### Single and batch runs on your machine
+The process is the same for these as above with the code for each differing. You can edit the files to change the initial parameter values. The key distinction is that there won't be a GUI interface. The code you run will be either
+
+```
+python run_single.py
+```
+
+or 
+
+```
+python run_batch.py
+```
+
+
+The model will run and export the data to a file called 'data'. Note that in either case, if you call these files multiple times, the data file will be overwritten. 
+
