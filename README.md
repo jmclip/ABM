@@ -1,6 +1,6 @@
 # ABM
 
-This is a basic overview to getting started in Agent-Based Modeling. There are slides (ABMs.rmd and ABMs.html), then two model files. Schell1 is a simplified version of Schelling's Segregation model while schell2 is a more complex version. 
+This is a basic overview to getting started in Agent-Based Modeling. There are slides (ABMs_slides.rmd and ABMs_slides.html), then two model files. Schell1 is a simplified version of Schelling's Segregation model while schell2 is a more complex version. See below for more detail. 
 
 ## Schelling's segregation model
 Schelling's segregation model begins with a simple set of premises: what if agents / individuals could live anywhere, are of two groups, and have some preference for neighbors to be members of their same group? Permitting for this, we can observe that agents segregate themselves into quite homogenous neighborhoods with preferences starting as low as wanting 37% of their neighbors to be members of their same group. 
